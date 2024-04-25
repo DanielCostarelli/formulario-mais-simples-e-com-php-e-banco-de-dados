@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário Simples com integração SQL</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            width: 100%;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #9bb3cf, #3a244f);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            width: 80%;
+            /* height: 100%; */
+            transition: opacity 0.3s;
+            transition: width 0.3s;
+        }
+
+        .esquerda {
+            width: 100%;
+            height: calc(90vh - 40px);
+            ;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #f7c891;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .setup {
+            display: flex;
+            flex-direction: column;
+            /* align-items: center; */
+            justify-content: space-around;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            width: 100%;
+            margin: 15px;
+        }
+
+        .login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            transition: opacity 0.3s;
+            transition: width 0.3s;
+        }
+
+        .txt {
+            font-size: 16px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+            transition: font-size 0.3s;
+        }
+
+        .input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: border 0.1s;
+        }
+
+
+        .input:focus {
+            outline: none;
+            border: 1px solid #000000a1;
+        }
+
+        .password-toggle-btn {
+            width: 30px;
+            height: 33px;
+            margin-left: 7px;
+            padding: 3px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ffffff;
+            cursor: pointer;
+            transition: background-color 0.1s;
+            transition: border 0.1s;
+        }
+
+        .password-toggle-btn:active {
+            background-color: #00000009;
+            border: 1px solid #00000057;
+        }
+
+        .password-toggle-btn img {
+            width: 100%;
+        }
+
+        .botoes {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+
+
+        .botao_limpar,
+        .botao_cadastrar,
+        .botao_buscar {
+            width: 45%;
+            padding: 7px;
+            border: 0px solid #00000000;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 14px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .botao_limpar {
+            background-color: #e66757;
+        }
+
+        .botao_cadastrar {
+            background-color: #77c268;
+            width: 100%;
+        }
+
+        .botao_buscar {
+            background-color: #6992cd;
+        }
+
+        .botao_limpar:active {
+            background-color: #db513f;
+        }
+
+        .botao_cadastrar:active {
+            background-color: #65af57;
+        }
+
+        .botao_buscar:active {
+            background-color: #5278ae;
+        }
+
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .sadasd {
+            transition: opacity 0.6s;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container" id="container1">
+
+
+        <!-- Matéria -->
+        <div class="setup">
+            <div class="txt">Matéria:</div>
+            <div class="login">
+
+                <form method="POST" id="form" action="envia.php" style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    width: 100%;
+                    ">
+
+
+                    <div style="display: flex; width: 100%;">
+                        <input class="input" type="text" id="nome" name="nome"
+                            placeholder="Digite o nome da disciplina...">
+                    </div>
+
+                    <div style="display: flex; width: 100%;">
+                        <input id="fase" class="input" type="text" name="fase" placeholder="Digite a fase..."
+                            style="margin-right: 3px;">
+                        <input id="media" class="input" type="text" name="media" placeholder="Digite a média..."
+                            style="margin-left: 3px;">
+                    </div>
+
+
+
+                    <div style="display: flex; width: 100%; margin-top: 20px;">
+                        <div class="botoes">
+                            <button class="botao_limpar" onclick="limpar_tudo()" type="reset">Limpar tudo</button>
+                        </div>
+                        <div class="botoes">
+                            <button class="botao_cadastrar" onclick="salvar()" type="button">Cadastrar</button>
+                        </div>
+                        <div class="botoes">
+                            <button class="botao_buscar" onclick="buscar()" type="button">Buscar</button>
+                        </div>
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+
+
+
+
+
+        <!-- ver -->
+        <div class="setup" style="
+        height: 515px;
+        justify-content: flex-start;
+        ">
+            <div class="txt">Usuários encontrados:</div>
+            <div class="login" id="tabelaa">
+                <div id="tab2" class="sadasd" style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    width: 100%;
+                    max-height: 490px;
+                    overflow-y: auto;">
+                    <table style="width: 100%;" id="tabela">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Fase</th>
+                                <th>Média</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corpo-tabela">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+
+
+        // Função para criar uma linha na tabela
+        function criarLinha(nome, fase, media) {
+            var linha = "<tr><td>" + nome + "</td><td>" + fase + "</td><td>" + media + "</td></tr>";
+            return linha;
+        }
+
+        // Função para carregar os dados da tabela
+        function carregarDados() {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var materias = JSON.parse(xhr.responseText);
+                        var corpoTabela = document.getElementById("corpo-tabela");
+                        materias.forEach(function (materia) {
+                            corpoTabela.innerHTML += criarLinha(materia.nome, materia.fase, materia.media);
+                        });
+                    } else {
+                        console.error('Erro ao carregar os dados: ' + xhr.status);
+                    }
+                }
+            };
+            xhr.open('GET', 'recebe.php', true);
+            xhr.send();
+        }
+
+        // Carregar os dados ao carregar a página
+        window.onload = function () {
+            carregarDados();
+        };
+
+
+
+
+
+
+
+
+
+        function limpar_tudo() {
+            console.log('limpar_tudo');
+
+        }
+
+
+
+
+        function salvar() {
+            console.log('cadastrar');
+
+
+            var nome = document.getElementById("nome").value;
+            var fase = document.getElementById("fase").value;
+            var media = document.getElementById("media").value;
+
+            // Verifica se algum campo está vazio
+            if (nome === '' || fase === '' || media === '') {
+                // Exibe o alerta de aviso
+                alert("Por favor, preencha todos os campos antes de cadastrar.");
+            } else {
+                // Se todos os campos estiverem preenchidos, envie o formulário
+                document.getElementById("form").submit();
+            }
+        }
+
+
+        function buscar() {
+            var nomeDigitado = document.getElementById("nome").value;
+            var faseDigitada = document.getElementById("fase").value;
+            var mediaDigitada = document.getElementById("media").value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var materias = JSON.parse(xhr.responseText);
+                        var corpoTabela = document.getElementById("corpo-tabela");
+                        corpoTabela.innerHTML = ""; // Limpa a tabela antes de adicionar os novos dados
+
+                        materias.forEach(function (materia) {
+                            // Verifica se os critérios de busca correspondem aos dados da matéria
+                            if ((nomeDigitado === '' || materia.nome.includes(nomeDigitado)) &&
+                                (faseDigitada === '' || materia.fase == faseDigitada) &&
+                                (mediaDigitada === '' || materia.media == mediaDigitada)) {
+                                corpoTabela.innerHTML += criarLinha(materia.nome, materia.fase, materia.media);
+                            }
+                        });
+                    } else {
+                        console.error('Erro ao carregar os dados: ' + xhr.status);
+                    }
+                }
+            };
+            var url = 'busca.php?';
+            if (nomeDigitado !== '') url += 'nome=' + encodeURIComponent(nomeDigitado) + '&';
+            if (faseDigitada !== '') url += 'fase=' + encodeURIComponent(faseDigitada) + '&';
+            if (mediaDigitada !== '') url += 'media=' + encodeURIComponent(mediaDigitada) + '&';
+            xhr.open('GET', url, true); // Constrói a URL com base nos critérios de busca
+            xhr.send();
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
